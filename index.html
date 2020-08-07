@@ -10,20 +10,21 @@
     <script>
 		
 		var http = new XMLHttpRequest();
-		var url = "https://galicia-dev.aper.cloud/login/callback";
+		var url = "https://galicia-dev.aper.cloud/login/access";
+		var urlCallback = "https://galicia-dev.aper.cloud/login/callback/?access=";
 		var Sesion = document.getElementById('Sesion').value;
 		var SToken = document.getElementById('SToken').value;
-		http.open("POST", url, true);
-		//http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");		
-		http.setRequestHeader('Content-Type', 'application/json');
-		http.setRequestHeader('Accept', '*/*');
         
-		//http.setRequestHeader('Origin','http://localhost:4200');
+		http.open("POST", url, true);		
+		http.setRequestHeader('Accept', '*/*');
 
 		http.onreadystatechange = function() {
 			if(http.readyState == 4 && http.status == 200) { 
-			//aqui obtienes la respuesta de tu peticion
-			alert(http.responseText);
+			
+				var response = JSON.parse(http.responseText);
+
+				window.location.href = urlCallback + response.access;
+
 			}		
 		}
 		
